@@ -6,6 +6,8 @@ from env import OPENAI_KEY
 
 openai.api_key = OPENAI_KEY
 
+app = Flask(__name__)
+
 '''
 open AI model for detailed product description,
 iterates through returned object and returns response
@@ -32,11 +34,8 @@ def product_description(query):
 
     return answer
 
-
-app = Flask(__name__)
-
 '''
-listens for form input on index.html and returns AI repsonse
+listens for form input on index.html and returns AI response
 '''
 
 
@@ -46,6 +45,7 @@ def index():
         query = request.form['productDescription']
         ai_answer = product_description(query)
         prompt = f'AI suggestion for {query}:'
+        history = [prompt, ai_answer]
 
     return render_template('index.html', **locals())
 
